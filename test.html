@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+        save = (data, filename, type) => {
+            console.log(data, data.length);
+            const blob = new Blob([data], { type: type });
+            console.log(blob);
+
+            const url = URL.createObjectURL(blob);
+            console.log(url);
+
+            const link = document.createElement("a");
+            link.innerText = "save";
+            link.href = url;
+            link.download = filename;
+
+            document.body.appendChild(link);
+            setTimeout(() => {
+                URL.revokeObjectURL(url);
+            }, 0)
+        }
+
+        // JSON
+        let data = { imie: "Maciej", wiek: 18 };
+        data = JSON.stringify(data);
+        const type = "application/json";
+        const filename = "data.json";
+
+        // TXT
+        //const data = "Maciej w wieku 18 lat";
+        //const type = "text/plain";
+        //const filename = "data.txt";
+
+        save(data, filename, type);
+    </script>
+</body>
+
+</html>
